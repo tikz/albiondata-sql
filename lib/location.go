@@ -7,13 +7,13 @@ import (
 type Location int
 
 const (
-	Unknown            Location = 0
-	ThetfordMarket     Location = 7
+	Unknown            Location = -1
+	ThetfordMarket     Location = 0
 	LymhurstMarket     Location = 1000
-	BridgewatchMarket  Location = 2004
+	BridgewatchMarket  Location = 2000
 	CaerleonMarket     Location = 3005
-	MartlockMarket     Location = 3010
-	FortSterlingMarket Location = 4002
+	MartlockMarket     Location = 3004
+	FortSterlingMarket Location = 4000
 
 	SwampCrossMarket    Location = 4
 	ForestCrossMarket   Location = 1006
