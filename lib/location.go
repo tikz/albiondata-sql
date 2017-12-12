@@ -9,7 +9,7 @@ type Location int
 const (
 	Unknown            Location = 0
 	ThetfordMarket     Location = 7
-	LymhurstMarket     Location = 1002
+	LymhurstMarket     Location = 1000
 	BridgewatchMarket  Location = 2004
 	CaerleonMarket     Location = 3005
 	MartlockMarket     Location = 3010

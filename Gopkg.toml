@@ -3,7 +3,7 @@
   version = "1.3.0"
 
 [[constraint]]
-  name = "jinzhu/gorm"
+  name = "github.com/jinzhu/gorm"
 
 [[constraint]]
   name = "github.com/regner/albiondata-client"

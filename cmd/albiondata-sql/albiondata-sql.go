@@ -15,9 +15,9 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 
-	"github.com/albiondata/albiondata-sql/lib"
+	"github.com/broderickhyman/albiondata-sql/lib"
 	nats "github.com/nats-io/go-nats"
-	adclib "github.com/regner/albiondata-client/lib"
+	adclib "github.com/broderickhyman/albiondata-client/lib"
 
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
@@ -145,7 +145,7 @@ func createGoldPrices(db *gorm.DB, gps *adclib.GoldPricesUpload) error {
 		m := lib.ModelGoldprices{}
 
 		price := gps.Prices[i]
-		time := time.Unix(gps.TimeStamps[i]/int64(10000000)-secondsFrom0ToUnix, 0)
+		time := time.Unix(int64(gps.TimeStamps[i])/int64(10000000)-int64(secondsFrom0ToUnix), 0)
 
 		if err := db.Unscoped().Where("timestamp = ?", time).First(&m).Error; err != nil {
 			// Not found
