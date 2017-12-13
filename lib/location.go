@@ -11,8 +11,9 @@ const (
 	ThetfordMarket     Location = 0
 	LymhurstMarket     Location = 1000
 	BridgewatchMarket  Location = 2000
-	CaerleonMarket     Location = 3005
+	BlackMarket        Location = 3003
 	MartlockMarket     Location = 3004
+	CaerleonMarket     Location = 3005
 	FortSterlingMarket Location = 4000
 
 	SwampCrossMarket    Location = 4
@@ -41,6 +42,7 @@ func Locations() []Location {
 		SteppeCrossMarket,
 		HighlandCrossMarket,
 		MountainCrossMarket,
+		BlackMarket,
 	}
 }
 
@@ -68,6 +70,8 @@ func (l Location) String() string {
 		return "Highland Cross Market"
 	case int(MountainCrossMarket):
 		return "Mountain Cross Market"
+	case int(BlackMarket):
+		return "Black Market"
 	default:
 		// Will never happen
 		return ""
@@ -98,6 +102,8 @@ func NewLocationFromId(locationID int) (Location, error) {
 		return HighlandCrossMarket, nil
 	case int(MountainCrossMarket):
 		return MountainCrossMarket, nil
+	case int(BlackMarket):
+		return BlackMarket, nil
 	default:
 		return Unknown, fmt.Errorf("Unknown location: %d", locationID)
 	}
