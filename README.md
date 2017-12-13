@@ -1,7 +1,7 @@
 albiondata-sql
 ==============
 
-The [albiondata-client](https://github.com/Regner/albiondata-client) pulls MarketOrders from the network traffic
+The [albiondata-client](https://github.com/broderickhyman/albiondata-client) pulls MarketOrders from the network traffic
 and pushes them to NATS, albiondata-sql dumps those from NATS to your SQL Database (one of "mysql", "postgresql" or "sqlite3").
 
 

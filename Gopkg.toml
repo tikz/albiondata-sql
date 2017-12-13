@@ -6,7 +6,7 @@
   name = "github.com/jinzhu/gorm"
 
 [[constraint]]
-  name = "github.com/regner/albiondata-client"
+  name = "github.com/broderickhyman/albiondata-client"
   branch = "master"
 
 [[constraint]]
