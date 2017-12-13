@@ -1,4 +1,4 @@
-USE albiondata;
+USE albion;
 
 /** TABLE market_stats **/
 DROP TABLE IF EXISTS `market_stats`;
