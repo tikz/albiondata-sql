@@ -2,10 +2,10 @@
 
 
 [[projects]]
+  branch = "master"
   name = "github.com/broderickhyman/albiondata-client"
   packages = ["lib"]
-  revision = "d3ef10361e5544d2e8e3179b85b9421c07268cc0"
-  version = "0.0.11"
+  revision = "79d0f049ee5f9ca38a1baa61de5169b874b08064"
 
 [[projects]]
   branch = "master"
@@ -24,6 +24,12 @@
   packages = ["."]
   revision = "a0583e0143b1624142adab07e0e97fe106d99561"
   version = "v1.3"
+
+[[projects]]
+  name = "github.com/google/uuid"
+  packages = ["."]
+  revision = "064e2069ce9c359c118179501254f67d7d37ba24"
+  version = "0.2"
 
 [[projects]]
   branch = "master"
@@ -172,6 +178,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "be5e2e52c35e40c3668b50c8464aed6a848be094ba85c0830ff9a3c1781bb0df"
+  inputs-digest = "e62a8613c21c5be9a4819eb9d0405660bc323c786a63d0d8ccc66c16b5a13c91"
   solver-name = "gps-cdcl"
   solver-version = 1
