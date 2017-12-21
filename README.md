@@ -25,11 +25,6 @@ For example:
 ADS_DBTYPE=sqlite3 ADS_DBURI=./sqlite.db ADS_NATSURL="nats://my-nats:4222" ./albiondata-sql 
 ```
 
-## Authors
-
-René Jochum <rene@jochums.at>
-
-
 ## LICENSE
 
 MIT
