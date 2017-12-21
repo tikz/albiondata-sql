@@ -95,11 +95,19 @@ func updateOrCreateOrder(db *gorm.DB, io *adclib.MarketOrder) error {
 		return err
 	}
 	mo := lib.NewModelMarketOrder()
+	//mo.Location = location
+        //mo.AlbionID = uint(io.ID)
+        //mo.ItemID = io.ItemID
+	//mo.Amount = io.Amount
 
-	// fmt.Printf("Importing: %s\n", io.ItemID)
+	fmt.Printf("Importing: %s - %d\n", io.ItemID, io.ID)
 
 	if err := db.Unscoped().Where("albion_id = ?", io.ID).First(&mo).Error; err != nil {
+		fmt.Errorf("ERROR: WHERE albion_id = %d, error was: %s", io.ID, err)
+	}
+	if mo.Model.ID == 0 {
 		// Not found
+		fmt.Printf("Not Found\n")
 		mo = lib.NewModelMarketOrder()
 		mo.Location = location
 		mo.AlbionID = uint(io.ID)
@@ -123,13 +131,13 @@ func updateOrCreateOrder(db *gorm.DB, io *adclib.MarketOrder) error {
 		}
 		mo.Expires = t
 
-		// fmt.Printf("%s: Creating %s\n", mo.Location.String(), mo.ItemID)
+		fmt.Printf("%s: Creating %d - %s\n", mo.Location.String(), mo.AlbionID, mo.ItemID)
 		if err := db.Create(&mo).Error; err != nil {
 			return err
 		}
 	} else {
 		// Found, set updatedAt
-		// fmt.Printf("%s: Updateing %s\n", mo.Location.String(), mo.ItemID)
+		fmt.Printf("%s: Updating %d - %s\n", mo.Location.String(), mo.AlbionID, mo.ItemID)
 		mo.Amount = io.Amount
 		mo.DeletedAt = nil
 		if err := db.Save(&mo).Error; err != nil {
@@ -205,14 +213,14 @@ func doCmd(cmd *cobra.Command, args []string) {
 	} else {
 		model := lib.NewModelMarketOrder()
 		if err := db.AutoMigrate(&model).Error; err != nil {
-			fmt.Printf("%v\n", err)
+			fmt.Printf("ModelMarket AutoMigrate %v\n", err)
 			return
 		}
 
 		gpmodel := lib.ModelGoldprices{}
 		err = db.AutoMigrate(&gpmodel).Error
 		if err != nil {
-			fmt.Printf("%v\n", err)
+			fmt.Printf("ModelGold AutoMigrate %v\n", err)
 			return
 		}
 	}
@@ -241,26 +249,26 @@ func doCmd(cmd *cobra.Command, args []string) {
 				order := &adclib.MarketOrder{}
 				err := json.Unmarshal(msg.Data, order)
 				if err != nil {
-					fmt.Printf("ERROR: %v\n", err)
+					fmt.Printf("ERROR MO Unmarshal: %v\n", err)
 					continue
 				}
 
 				err = updateOrCreateOrder(db, order)
 				if err != nil {
-					fmt.Printf("ERROR: %s\n", err)
+					fmt.Printf("ERROR MO UpdateCreate: %s\n", err)
 				}
 
 			case adclib.NatsGoldPricesDeduped:
 				gprices := &adclib.GoldPricesUpload{}
 				err := json.Unmarshal(msg.Data, gprices)
 				if err != nil {
-					fmt.Printf("ERROR: %v\n", err)
+					fmt.Printf("ERROR G Unmarshal: %v\n", err)
 					continue
 				}
 
 				err = createGoldPrices(db, gprices)
 				if err != nil {
-					fmt.Printf("ERROR: %s\n", err)
+					fmt.Printf("ERROR G Create: %s\n", err)
 				}
 
 			default:
