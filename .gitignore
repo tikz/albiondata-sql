@@ -5,3 +5,5 @@ albiondata-sql
 albiondata-sql.yaml
 
 .idea
+
+*.exe
