@@ -50,8 +50,8 @@ CREATE PROCEDURE `create_hour_stats`(IN var_timestamp timestamp)
     BLOCK1: BEGIN
         DECLARE var_hour_from VARCHAR(20);
         DECLARE var_hour_to VARCHAR(20);
-        SELECT DATE_FORMAT(var_timestamp, '%Y-%m-%dT%H:00:00Z00:00') INTO var_hour_from;
-        SELECT DATE_FORMAT(var_timestamp, '%Y-%m-%dT%H:59:59Z00:00') INTO var_hour_to;
+        SELECT DATE_FORMAT(var_timestamp, '%Y-%m-%dT%H:00:00') INTO var_hour_from;
+        SELECT DATE_FORMAT(var_timestamp, '%Y-%m-%dT%H:59:59') INTO var_hour_to;
 
         BLOCK2: BEGIN
             DECLARE var_location int;
@@ -72,7 +72,7 @@ CREATE PROCEDURE `create_hour_stats`(IN var_timestamp timestamp)
                 IF cursor_items_done THEN
                     CLOSE cursor_items;
                     LEAVE Reading_Items_Loop;
-                END IF;  
+                END IF;
 
                 BLOCK3: BEGIN
                     DECLARE CONTINUE HANDLER FOR NOT FOUND SET var_price_min = 0;
@@ -86,7 +86,7 @@ CREATE PROCEDURE `create_hour_stats`(IN var_timestamp timestamp)
 
                 BLOCK3: BEGIN
                     DECLARE CONTINUE HANDLER FOR NOT FOUND SET var_price_avg = 0.0;
-                    SELECT AVG(`price`) as 'price_avg' FROM `market_orders` WHERE `location` = var_location AND `item_id` = var_item_id AND `auction_type` = 'offer' AND (`updated_at` >= var_hour_from AND `updated_at` <= var_hour_to) INTO var_price_avg;                    
+                    SELECT AVG(`price`) as 'price_avg' FROM `market_orders` WHERE `location` = var_location AND `item_id` = var_item_id AND `auction_type` = 'offer' AND (`updated_at` >= var_hour_from AND `updated_at` <= var_hour_to) INTO var_price_avg;
                 END BLOCK3;
 
                 Set @stmt = CONCAT('INSERT IGNORE INTO `market_stats` (`item_id`, `location`, `timestamp`, `price_min`, `price_max`, `price_avg`) VALUES (\'', IFNULL(var_item_id, ''), '\',', IFNULL(var_location, 0), ',\'', IFNULL(var_hour_from, 0), '\',', IFNULL(var_price_min, 0), ',', IFNULL(var_price_max, 0), ',', IFNULL(var_price_avg, 0.0), ');');
@@ -94,7 +94,7 @@ CREATE PROCEDURE `create_hour_stats`(IN var_timestamp timestamp)
             END LOOP;
 
             COMMIT;
-            
+
         END BLOCK2;
     END BLOCK1;
 
@@ -103,27 +103,27 @@ $$
 DELIMITER ;
 
 
-/** PROCEDURE `create_now_stats` creates stats for the last hour in all locations 
+/** PROCEDURE `create_now_stats` creates stats for the last hour in all locations
 See the event at the end of the file to run it every hour.
 **/
-DROP PROCEDURE IF EXISTS `create_now_stats`; 
+DROP PROCEDURE IF EXISTS `create_now_stats`;
 
 DELIMITER $$
-CREATE PROCEDURE `create_now_stats`() 
+CREATE PROCEDURE `create_now_stats`()
 	MODIFIES SQL DATA
-    
+
     CALL `create_hour_stats`(UTC_TIMESTAMP());
 $$
 
 DELIMITER ;
 
 /** PROCEDURE `create_all_data_stats` A VERY EXPENSIVE script that creates stats for all items in the DB. **/
-DROP PROCEDURE IF EXISTS `create_all_data_stats`; 
+DROP PROCEDURE IF EXISTS `create_all_data_stats`;
 
 DELIMITER $$
-CREATE PROCEDURE `create_all_data_stats`() 
+CREATE PROCEDURE `create_all_data_stats`()
 	MODIFIES SQL DATA
-    
+
 BLOCK1: BEGIN
     DECLARE var_timestamp timestamp;
     DECLARE cursor_done boolean;
@@ -139,11 +139,11 @@ BLOCK1: BEGIN
 
         CALL `create_hour_stats`(var_timestamp);
     END LOOP;
-    CLOSE cursor_all;    
+    CLOSE cursor_all;
 END BLOCK1;
 $$
 
-DELIMITER ; 
+DELIMITER ;
 
 
 /**
@@ -154,3 +154,4 @@ DROP EVENT IF EXISTS `create_now_stats`;
 SET GLOBAL event_scheduler="ON";
 
 CREATE EVENT `create_now_stats` ON SCHEDULE EVERY 60 MINUTE STARTS (DATE_FORMAT(CURRENT_TIMESTAMP, '%Y-%m-%d %H:59:00')) ON COMPLETION NOT PRESERVE ENABLE DO CALL `create_now_stats`();
+

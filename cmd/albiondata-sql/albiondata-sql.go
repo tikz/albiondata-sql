@@ -95,19 +95,16 @@ func updateOrCreateOrder(db *gorm.DB, io *adclib.MarketOrder) error {
 		return err
 	}
 	mo := lib.NewModelMarketOrder()
-	//mo.Location = location
-        //mo.AlbionID = uint(io.ID)
-        //mo.ItemID = io.ItemID
-	//mo.Amount = io.Amount
 
-	fmt.Printf("Importing: %s - %d\n", io.ItemID, io.ID)
+	//fmt.Printf("Importing: %s - %d at %s\n", io.ItemID, io.ID, location)
 
 	if err := db.Unscoped().Where("albion_id = ?", io.ID).First(&mo).Error; err != nil {
 		fmt.Errorf("ERROR: WHERE albion_id = %d, error was: %s", io.ID, err)
+		return err
 	}
 	if mo.Model.ID == 0 {
 		// Not found
-		fmt.Printf("Not Found\n")
+		//fmt.Printf("Not Found\n")
 		mo = lib.NewModelMarketOrder()
 		mo.Location = location
 		mo.AlbionID = uint(io.ID)
@@ -131,13 +128,13 @@ func updateOrCreateOrder(db *gorm.DB, io *adclib.MarketOrder) error {
 		}
 		mo.Expires = t
 
-		fmt.Printf("%s: Creating %d - %s\n", mo.Location.String(), mo.AlbionID, mo.ItemID)
+		//fmt.Printf("Creating: %d - %s at %s\n", mo.AlbionID, mo.ItemID, mo.Location.String())
 		if err := db.Create(&mo).Error; err != nil {
 			return err
 		}
 	} else {
 		// Found, set updatedAt
-		fmt.Printf("%s: Updating %d - %s\n", mo.Location.String(), mo.AlbionID, mo.ItemID)
+		//fmt.Printf("Updating %d - %s at %s\n", mo.AlbionID, mo.ItemID, mo.Location.String())
 		mo.Amount = io.Amount
 		mo.DeletedAt = nil
 		if err := db.Save(&mo).Error; err != nil {
