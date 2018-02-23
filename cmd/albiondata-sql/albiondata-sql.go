@@ -128,6 +128,11 @@ func updateOrCreateOrder(db *gorm.DB, io *adclib.MarketOrder) error {
 		if err != nil {
 			return fmt.Errorf("while parsing the time of order id %d, error was: %s", io.ID, err)
 		}
+		maxTime := time.Now();
+		maxTime.AddDate(0, 1, 0);
+		if t.After(maxTime) {
+			t = maxTime;
+		}
 		mo.Expires = t
 
 		//fmt.Printf("Creating: %d - %s at %s\n", mo.AlbionID, mo.ItemID, mo.Location.String())
