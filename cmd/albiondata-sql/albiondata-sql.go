@@ -132,7 +132,7 @@ func updateOrCreateOrder(db *gorm.DB, io *adclib.MarketOrder) error {
 		// This is a workaround for strict datetime fields that do not support 1000 years from now
 		maxTime := time.Now().AddDate(10, 0, 0)
 		if t.After(maxTime) {
-			t = time.Now().AddDate(0, 0, 1)
+			t = time.Now().AddDate(0, 0, 7)
 		}
 		mo.Expires = t
 
