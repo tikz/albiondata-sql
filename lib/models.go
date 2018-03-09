@@ -7,17 +7,20 @@ import (
 )
 
 type ModelMarketOrder struct {
-	AlbionID         uint   `gorm:"not null;unique_index:idx_id_location"`
-	ItemID           string `gorm:"index"`
-	QualityLevel     int8   `gorm:"size:1"`
-	EnchantmentLevel int8   `gorm:"size:1"`
-	Price            int    `gorm:"index"`
-	InitialAmount    int
-	Amount           int
-	AuctionType      string `gorm:"index"`
-	Expires          time.Time
-	Location         Location `gorm:"not null;unique_index:idx_id_location;index"`
-	gorm.Model
+	AlbionID			uint   `gorm:"not null;unique_index"`
+	ItemID				string `gorm:"index"`
+	QualityLevel		int8   `gorm:"size:1"`
+	EnchantmentLevel	int8   `gorm:"size:1"`
+	Price				int    `gorm:"index"`
+	InitialAmount		int
+	Amount				int
+	AuctionType			string `gorm:"index"`
+	Expires				time.Time
+	Location			Location `gorm:"not null;index"`
+	ID					uint `gorm:"primary_key"`
+	CreatedAt			time.Time `gorm:"index"`
+	UpdatedAt			time.Time `gorm:"index"`
+	DeletedAt			*time.Time `gorm:"index"`
 }
 
 func (m ModelMarketOrder) TableName() string {
@@ -31,11 +34,11 @@ func NewModelMarketOrder() ModelMarketOrder {
 type ModelMarketStats struct {
 	ID        int    `gorm:"primary_key"`
 	ItemID    string `gorm:"index"`
-	Location  Location
+	Location  Location `gorm:"index"`
 	PriceMin  int
 	PriceMax  int
 	PriceAvg  float64
-	Timestamp *time.Time
+	Timestamp *time.Time `gorm:"index"`
 }
 
 func (m ModelMarketStats) TableName() string {

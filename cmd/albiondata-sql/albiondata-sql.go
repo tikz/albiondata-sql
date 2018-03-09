@@ -98,13 +98,13 @@ func updateOrCreateOrder(db *gorm.DB, io *adclib.MarketOrder) error {
 
 	//fmt.Printf("Importing: %s - %d at %s\n", io.ItemID, io.ID, location)
 
-	if err := db.Unscoped().Where("albion_id = ?", io.ID).First(&mo).Error; err != nil {
+	if err := db.Unscoped().Where(&lib.ModelMarketOrder{AlbionID: uint(io.ID)}).First(&mo).Error; err != nil {
 		if err != gorm.ErrRecordNotFound {
 			fmt.Printf("ERROR: WHERE albion_id = %d, error was: %s\n", io.ID, err)
 			return err
 		}
 	}
-	if mo.Model.ID == 0 {
+	if mo.ID == 0 {
 		// Not found
 		//fmt.Printf("Not Found\n")
 		mo = lib.NewModelMarketOrder()
