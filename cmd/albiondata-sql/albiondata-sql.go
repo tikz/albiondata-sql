@@ -179,7 +179,8 @@ func expireOrders(db *gorm.DB) {
 
 	for {
 		now := time.Now()
-		if err := db.Table(lib.NewModelMarketOrder().TableName()).Where("expires <= ?", now).Update(map[string]interface{}{"deleted_at": now}).Error; err != nil {
+		updatedFrom := time.Now().AddDate(0,0,-3)
+		if err := db.Where("expires <= ? or updated_at <= ?", now, updatedFrom).Delete(&lib.ModelMarketOrder{}).Error; err != nil {
 			fmt.Printf("ERROR: %v\n", err)
 		}
 
