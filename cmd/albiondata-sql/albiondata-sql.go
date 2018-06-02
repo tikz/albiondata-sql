@@ -145,6 +145,7 @@ func updateOrCreateOrder(db *gorm.DB, io *adclib.MarketOrder) error {
 		//fmt.Printf("Updating %d - %s at %s\n", mo.AlbionID, mo.ItemID, mo.Location.String())
 		mo.Amount = io.Amount
 		mo.DeletedAt = nil
+		mo.Location = location //TODO: Fix this workaround for when client sends the wrong location
 		if err := db.Save(&mo).Error; err != nil {
 			return err
 		}
