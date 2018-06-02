@@ -237,6 +237,7 @@ func doCmd(cmd *cobra.Command, args []string) {
 		go expireOrders(db)
 	}
 
+	fmt.Printf("Connecting to nats: %s\n", viper.GetString("natsURL"))
 	nc, _ := nats.Connect(viper.GetString("natsURL"))
 	defer nc.Close()
 
