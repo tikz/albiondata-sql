@@ -24,7 +24,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-const secondsFrom0ToUnix = int64(62167132800)
+const secondsFrom0ToUnix = int64(62135596800)
 
 var (
 	version string
