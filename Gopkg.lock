@@ -44,10 +44,10 @@
   version = "v1.0"
 
 [[projects]]
+  branch = "master"
   name = "github.com/jinzhu/gorm"
   packages = [".","dialects/mssql","dialects/mysql","dialects/postgres","dialects/sqlite"]
-  revision = "5174cc5c242a728b435ea2be8a2f7f998e15429b"
-  version = "v1.0"
+  revision = "32455088f24d6b1e9a502fb8e40fdc16139dbea8"
 
 [[projects]]
   branch = "master"
@@ -178,6 +178,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "e62a8613c21c5be9a4819eb9d0405660bc323c786a63d0d8ccc66c16b5a13c91"
+  inputs-digest = "d2e78fd62acd3e82e2cb6b5c96a5e69bbf62a4e90619fa6cbdc1b05f985683f5"
   solver-name = "gps-cdcl"
   solver-version = 1

@@ -8,19 +8,19 @@ import (
 
 type ModelMarketOrder struct {
 	AlbionID			uint   `gorm:"not null;unique_index"`
-	ItemID				string `gorm:"index"`
-	QualityLevel		int8   `gorm:"size:1"`
-	EnchantmentLevel	int8   `gorm:"size:1"`
-	Price				int    `gorm:"index"`
-	InitialAmount		int
+	ItemID				string `gorm:"index:item_id,main"`
+	QualityLevel			int8   `gorm:"size:1"`
+	EnchantmentLevel		int8   `gorm:"size:1"`
+	Price				int
+	InitialAmount			int
 	Amount				int
-	AuctionType			string `gorm:"index"`
+	AuctionType			string `gorm:"index:main"`
 	Expires				time.Time
-	Location			Location `gorm:"not null;index"`
-	ID					uint `gorm:"primary_key"`
-	CreatedAt			time.Time `gorm:"index"`
-	UpdatedAt			time.Time `gorm:"index"`
-	DeletedAt			*time.Time `gorm:"index"`
+	Location			Location `gorm:"not null;index:main"`
+	ID				uint `gorm:"primary_key"`
+	CreatedAt			time.Time
+	UpdatedAt			time.Time `gorm:"index:item_id,main"`
+	DeletedAt			*time.Time `gorm:"index:item_id,main"`
 }
 
 func (m ModelMarketOrder) TableName() string {
