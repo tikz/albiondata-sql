@@ -146,7 +146,7 @@ func updateOrCreateOrder(db *gorm.DB, io *adclib.MarketOrder) error {
 		mo.Amount = io.Amount
 		mo.DeletedAt = nil
 		mo.Location = location //TODO: Fix this workaround for when client sends the wrong location
-		if err := db.Save(&mo).Error; err != nil {
+		if err := db.Unscoped().Save(&mo).Error; err != nil {
 			return err
 		}
 	}
