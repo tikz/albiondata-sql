@@ -1,9 +1,7 @@
 USE albion;
 
 /** TABLE market_stats **/
-DROP TABLE IF EXISTS `market_stats`;
-
-CREATE TABLE `market_stats` (
+CREATE TABLE IF NOT EXISTS `market_stats` (
  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
  `item_id` varchar(255) NOT NULL,
  `location` int(11) NOT NULL,
