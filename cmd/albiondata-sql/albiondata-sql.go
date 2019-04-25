@@ -15,9 +15,9 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 
-	"github.com/broderickhyman/albiondata-sql/lib"
-	nats "github.com/nats-io/go-nats"
 	adclib "github.com/broderickhyman/albiondata-client/lib"
+	nats "github.com/nats-io/go-nats"
+	"github.com/tikz/albiondata-sql/lib"
 
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
@@ -180,7 +180,7 @@ func expireOrders(db *gorm.DB) {
 
 	for {
 		now := time.Now()
-		updatedFrom := time.Now().AddDate(0,0,-3)
+		updatedFrom := time.Now().AddDate(0, 0, -3)
 		if err := db.Where("expires <= ? or updated_at <= ?", now, updatedFrom).Delete(&lib.ModelMarketOrder{}).Error; err != nil {
 			fmt.Printf("ERROR: %v\n", err)
 		}
