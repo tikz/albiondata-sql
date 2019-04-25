@@ -114,13 +114,7 @@ func updateOrCreateOrder(db *gorm.DB, io *adclib.MarketOrder) error {
 		mo.QualityLevel = int8(io.QualityLevel)
 		mo.EnchantmentLevel = int8(io.EnchantmentLevel)
 		price := strconv.Itoa(io.Price)
-		if len(price) > 4 {
-			price = price[:len(price)-4]
-			i, _ := strconv.Atoi(price)
-			mo.Price = i
-		} else {
-			mo.Price = 0
-		}
+		mo.Price, _ = strconv.Atoi(price)
 		mo.InitialAmount = io.Amount
 		mo.Amount = io.Amount
 		mo.AuctionType = io.AuctionType
