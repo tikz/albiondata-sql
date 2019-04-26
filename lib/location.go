@@ -47,27 +47,27 @@ func Locations() []Location {
 func (l Location) String() string {
 	switch int(l) {
 	case int(ThetfordMarket):
-		return "Thetford Market"
+		return "Thetford"
 	case int(LymhurstMarket):
-		return "Lymhurst Market"
+		return "Lymhurst"
 	case int(BridgewatchMarket):
-		return "Bridgewatch Market"
+		return "Bridgewatch"
 	case int(CaerleonMarket):
-		return "Caerleon Market"
+		return "Caerleon"
 	case int(MartlockMarket):
-		return "Martlock Market"
+		return "Martlock"
 	case int(FortSterlingMarket):
-		return "Fort Sterling Market"
+		return "Fort Sterling"
 	case int(SwampCrossMarket):
-		return "Swamp Cross Market"
+		return "Swamp Cross"
 	case int(ForestCrossMarket):
-		return "Forest Cross Market"
+		return "Forest Cross"
 	case int(SteppeCrossMarket):
-		return "Steppe Cross Market"
+		return "Steppe Cross"
 	case int(HighlandCrossMarket):
-		return "Highland Cross Market"
+		return "Highland Cross"
 	case int(MountainCrossMarket):
-		return "Mountain Cross Market"
+		return "Mountain Cross"
 	default:
 		// Will never happen
 		return ""
